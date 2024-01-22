@@ -1,17 +1,17 @@
 package controllers
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
+	"github.com/ifarbie/task-5-pbi-btpns-fariz-rifky-berliano/database"
 	"github.com/ifarbie/task-5-pbi-btpns-fariz-rifky-berliano/models"
 )
 
-var photo = models.Photo{
-	ID: 1,
-	Title: "Photo", 
-	Caption: "Caption",
-	PhotoUrl: "img.com",
-	UserID: 2,
-}
 func GetPhotos(c *gin.Context) {
-	c.JSON(200, photo)
+	var photos []models.Photo
+
+	database.DB.Find(&photos)
+
+	c.JSON(http.StatusOK, gin.H{"photos": photos})
 }

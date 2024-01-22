@@ -3,13 +3,27 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/ifarbie/task-5-pbi-btpns-fariz-rifky-berliano/controllers"
+	"github.com/ifarbie/task-5-pbi-btpns-fariz-rifky-berliano/database"
+	"github.com/ifarbie/task-5-pbi-btpns-fariz-rifky-berliano/middlewares"
 )
 
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
+	database.ConnectDatabase()
 
-	users := r.Group("/users")
-	users.GET("/photos", controllers.GetPhotos)
+	usersPublic := r.Group("/users")
+	usersPublic.POST("/register", controllers.UserRegister)
+	usersPublic.POST("/login", controllers.UserLogin)
+	
+	usersProtected := r.Group("/users")
+	usersProtected.Use(middlewares.RequireAuth())
+	usersProtected.GET("/logout", controllers.UserLogout)
+	usersProtected.PUT("/:userid", controllers.UserUpdate)
+	usersProtected.DELETE("/:userid", controllers.UserDelete)
+
+	photosProtected := r.Group("/photosProtected")
+	photosProtected.Use(middlewares.RequireAuth())
+	photosProtected.GET("", controllers.GetPhotos)
 
 	return r
 }
