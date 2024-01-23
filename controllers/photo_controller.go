@@ -43,7 +43,7 @@ func UserUploadPhoto(c *gin.Context) {
 	// 2. MEMBUAT PHOTO
 	// CEK APAKAH PHOTO URL SAMA
 	var photo models.Photo
-	if err := database.DB.Where("photo_url = ? AND id = ?", userPhotoInput.PhotoUrl, claims.ID).First(&photo).Error; err == nil {
+	if err := database.DB.Where("photo_url = ? AND user_id = ?", userPhotoInput.PhotoUrl, claims.ID).First(&photo).Error; err == nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "please choose different photo"})
 		return
 	}
@@ -164,5 +164,45 @@ func UserUpdatePhoto(c *gin.Context) {
 	
 	c.JSON(http.StatusOK, gin.H{
 		"message": "your photo succesfully changed",
+	})
+}
+
+func UserDeletePhoto(c *gin.Context) {
+	// CEK ID ENDPOINT
+	photoID, err := strconv.Atoi(c.Param("photoId"))
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "id invalid!"})
+		return
+	}
+
+	// MENGAMBIL TOKEN USER SAAT INI
+	tokenString, _ := c.Cookie("token")
+	claims, _, err := helpers.ParseToken(tokenString)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
+		return
+	}
+
+	// MENGAMBIL DATA PHOTO YANG SAAT INI
+	var currentPhoto models.Photo
+	if err := database.DB.Where("id = ? AND user_id = ?", photoID, claims.ID).First(&currentPhoto).Error; err != nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "photo not found"})
+		return
+	}
+
+	// PERIZINAN
+	if currentPhoto.UserID != claims.ID {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "you have no access to do that"})
+		return
+	}
+
+	// HAPUS FOTO
+	if err := database.DB.Delete(&currentPhoto).Error; err != nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "delete photo success",
 	})
 }

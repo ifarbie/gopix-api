@@ -26,7 +26,7 @@ func SetupRouter() *gin.Engine {
 	photosProtected.POST("", controllers.UserUploadPhoto)
 	photosProtected.GET("", controllers.UserGetPhotos)
 	photosProtected.PUT("/:photoId", controllers.UserUpdatePhoto)
-	// photosProtected.DELETE("/:photoid", controllers.UserDeletePhoto)
+	photosProtected.DELETE("/:photoId", controllers.UserDeletePhoto)
 
 	return r
 }
