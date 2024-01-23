@@ -116,7 +116,7 @@ func UserLogin(c *gin.Context) {
 
 func UserUpdate(c *gin.Context) {
 	// JIKA PARAM/ID TIDAK VALID
-	userID, err := strconv.Atoi(c.Param("userid"))
+	userID, err := strconv.Atoi(c.Param("userId"))
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "id invalid"})
 		return
@@ -202,7 +202,7 @@ func UserUpdate(c *gin.Context) {
 
 func UserDelete(c *gin.Context) {
 	// CEK JIKA ID TIDAK VALID
-	userID, err := strconv.Atoi(c.Param("userid"))
+	userID, err := strconv.Atoi(c.Param("userId"))
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "id invalid"})
 		return

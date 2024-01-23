@@ -18,12 +18,15 @@ func SetupRouter() *gin.Engine {
 	usersProtected := r.Group("/users")
 	usersProtected.Use(middlewares.RequireAuth())
 	usersProtected.GET("/logout", controllers.UserLogout)
-	usersProtected.PUT("/:userid", controllers.UserUpdate)
-	usersProtected.DELETE("/:userid", controllers.UserDelete)
+	usersProtected.PUT("/:userId", controllers.UserUpdate)
+	usersProtected.DELETE("/:userId", controllers.UserDelete)
 
-	photosProtected := r.Group("/photosProtected")
+	photosProtected := r.Group("/photos")
 	photosProtected.Use(middlewares.RequireAuth())
-	photosProtected.GET("", controllers.GetPhotos)
+	photosProtected.POST("", controllers.UserUploadPhoto)
+	photosProtected.GET("", controllers.UserGetPhotos)
+	photosProtected.PUT("/:photoId", controllers.UserUpdatePhoto)
+	// photosProtected.DELETE("/:photoid", controllers.UserDeletePhoto)
 
 	return r
 }
