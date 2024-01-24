@@ -66,7 +66,7 @@ func UserRegister(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "sukses registrasi!"})
+	c.JSON(http.StatusCreated, gin.H{"message": "registration success"})
 }
 
 func UserLogin(c *gin.Context) {
@@ -233,7 +233,7 @@ func UserDelete(c *gin.Context) {
 		return
 	}
 	
-	c.JSON(http.StatusOK, gin.H{"message": "delete success"})
+	c.JSON(http.StatusNoContent, gin.H{"message": "delete success"})
 }
 
 func UserLogout(c *gin.Context) {
