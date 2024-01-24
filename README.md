@@ -175,5 +175,5 @@ This repository contains a Golang-based API project that provides endpoints for 
 ## Authentication
 - User authentication is required for all endpoints in the Photo Management section. Upon successful login, a token is provided, which can be used for managing user data.
 
-## Tools 🛠
+## Tools
 [![My Skills](https://skillicons.dev/icons?i=go,postman,git,mysql,vscode)](https://skillicons.dev)
