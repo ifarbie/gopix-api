@@ -102,9 +102,9 @@ This repository contains a Golang-based API project that provides endpoints for 
    - *Request Body:*
      ```json
      {
-       "title": "Example Photo",
+       "title": "Example Photo", // required
        "caption": "A description of the photo",
-       "photoUrl": "https://example.com/photo.jpg"
+       "photoUrl": "https://example.com/photo.jpg" // required
      }
      ```
    - *Response:* 201 Created
