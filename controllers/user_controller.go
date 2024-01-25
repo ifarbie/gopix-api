@@ -233,7 +233,7 @@ func UserDelete(c *gin.Context) {
 		return
 	}
 	
-	c.JSON(http.StatusNoContent, gin.H{"message": "delete success"})
+	c.JSON(http.StatusNoContent, gin.H{"message": "delete user success"})
 }
 
 func UserLogout(c *gin.Context) {
