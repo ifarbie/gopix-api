@@ -1,4 +1,4 @@
-# Project API using Golang
+# GoPix API
 
 This repository contains a Golang-based API project that provides endpoints for managing users and their associated photos. The API follows a RESTful architecture and includes the following features:
 
